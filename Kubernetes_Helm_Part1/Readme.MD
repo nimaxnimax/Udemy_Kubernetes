@@ -141,9 +141,7 @@ containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 ```
 
-```bash
 Restart and enable containerd service
-```
 
 ```bash
 sudo systemctl restart containerd
@@ -160,8 +158,9 @@ Ubuntu 22 >>
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 ```
 
-```bash
 Ubuntu 20 >>
+
+```bash
 sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 ```
 
@@ -194,13 +193,13 @@ Install Kubernetes Cluster on Ubuntu 22.04
 Now, we are all set to initialize Kubernetes cluster. Run the following Kubeadm command on the master node only.
 
 ```bash
-sudo kubeadm init --control-plane-endpoint=k8smaster.example.net
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
 If any error >> bypass >>
 
 ```bash
-sudo kubeadm init --control-plane-endpoint=k8smaster.example.net --ignore-preflight-errors=NumCPU,Mem,Swap
+sudo kubeadm init --ignore-preflight-errors=NumCPU,Mem,Swap --pod-network-cidr=10.244.0.0/16
 ```
 
 If any problem... Reset and start again.
