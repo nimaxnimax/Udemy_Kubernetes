@@ -48,7 +48,7 @@ Login to to master node and set hostname using hostnamectl command
 
 ```bash
 sudo hostnamectl set-hostname "master"
-sudo exec bash
+exec bash
 ```
 
 On the worker nodes run >> If you are configuring more than one worker change the hostname for each of them
