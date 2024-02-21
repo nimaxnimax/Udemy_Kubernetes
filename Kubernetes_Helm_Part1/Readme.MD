@@ -504,3 +504,39 @@ sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
+**********
+
+Test Your Kubernetes Cluster Installation
+
+To test Kubernetes installation, let’s try to deploy nginx based application and try to access it.
+
+```bash
+kubectl create deployment nginx-app --image=nginx --replicas=3
+kubectl get pods
+```
+
+Check the status of nginx-app deployment
+
+```bash
+kubectl get deployment nginx-app
+```
+
+Expose the deployment as NodePort
+
+```bash
+kubectl expose deployment nginx-app --type=NodePort --port=80
+```
+
+Run following commands to view service status
+
+```bash
+kubectl get svc nginx-app
+kubectl describe svc nginx-app
+```
+
+To deploy an Nginx container on Kubernetes with 3 replicas and expose it on a VPS IP address on port 80, you can use a Kubernetes Deployment and a Service.
+
+```bash
+kubectl patch svc [SERVICE] -n default -p '{"spec": {"type": "LoadBalancer", "externalIPs":["IP_ADDRESS"]}}'
+```
+
