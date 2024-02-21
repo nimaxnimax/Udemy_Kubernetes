@@ -624,6 +624,20 @@ URL >> https://artifacthub.io/packages/helm/bitnami/nginx
 
 helm install my-nginx oci://registry-1.docker.io/bitnamicharts/nginx
 
+```
+
+or 
+
+```bash
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+helm list
+
+helm uninstall my-nginx
+
+helm install my-nginx bitnami/nginx --version 15.11.0
+
 kubectl patch svc my-nginx -n default -p '{"spec": {"type": "LoadBalancer", "externalIPs":["148.251.119.125"]}}'
 
 kubectl get pods
