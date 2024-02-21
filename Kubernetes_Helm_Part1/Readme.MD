@@ -614,4 +614,28 @@ kubectl delete service my-release-apache
 ```
 
 
+**********
+
+Helm Example >> Nginx
+
+URL >> https://artifacthub.io/packages/helm/bitnami/nginx
+
+```bash
+
+helm install my-nginx oci://registry-1.docker.io/bitnamicharts/nginx
+
+kubectl patch svc my-nginx -n default -p '{"spec": {"type": "LoadBalancer", "externalIPs":["148.251.119.125"]}}'
+
+kubectl get pods
+
+kubectl get nodes
+
+kubectl get services
+
+kubectl delete deployment my-nginx
+
+kubectl delete service my-nginx
+
+```
+
 
