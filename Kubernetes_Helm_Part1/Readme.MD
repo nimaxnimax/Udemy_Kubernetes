@@ -540,3 +540,21 @@ kubectl delete deployment hello-world
 
 ```
 
+
+**********
+
+Helm Installation on Ubuntu 20 or 22
+
+```bash
+
+sudo snap install helm --classic
+
+helm version
+
+kubectl cluster-info
+
+helm create hello-world
+
+```
+
+
