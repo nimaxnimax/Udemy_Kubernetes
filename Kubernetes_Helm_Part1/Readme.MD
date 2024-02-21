@@ -508,35 +508,35 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 Test Your Kubernetes Cluster Installation
 
-To test Kubernetes installation, let’s try to deploy nginx based application and try to access it.
-
 ```bash
-kubectl create deployment nginx-app --image=nginx --replicas=3
-kubectl get pods
-```
 
-Check the status of nginx-app deployment
+kubectl apply -f https://k8s.io/examples/service/load-balancer-example.yaml
 
-```bash
-kubectl get deployment nginx-app
-```
+kubectl get deployments hello-world
 
-Expose the deployment as NodePort
+kubectl describe deployments hello-world
 
-```bash
-kubectl expose deployment nginx-app --type=NodePort --port=80
-```
+kubectl get replicasets
 
-Run following commands to view service status
+kubectl expose deployment hello-world --type=LoadBalancer --name=my-service
 
-```bash
-kubectl get svc nginx-app
-kubectl describe svc nginx-app
-```
+kubectl get services my-service
 
-To deploy an Nginx container on Kubernetes with 3 replicas and expose it on a VPS IP address on port 80, you can use a Kubernetes Deployment and a Service.
+kubectl describe services my-service
 
-```bash
-kubectl patch svc [SERVICE] -n default -p '{"spec": {"type": "LoadBalancer", "externalIPs":["IP_ADDRESS"]}}'
+kubectl get pods --output=wide
+
+kubectl get pods --all-namespaces
+
+kubectl get services
+
+kubectl patch svc <svc-name> -n <namespace> -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.31.71.218"]}}'
+
+kubectl patch svc my-service -n default -p '{"spec": {"type": "LoadBalancer", "externalIPs":["193.176.31.120"]}}'
+
+kubectl delete services my-service
+
+kubectl delete deployment hello-world
+
 ```
 
