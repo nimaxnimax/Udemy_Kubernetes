@@ -543,18 +543,75 @@ kubectl delete deployment hello-world
 
 **********
 
-Helm Installation on Ubuntu 20 or 22
+Helm Installation on Ubuntu 20 or 22 and Test
+
+Solution 1:
 
 ```bash
 
 sudo snap install helm --classic
 
-helm version
+```
 
-kubectl cluster-info
+Solution 2:
 
-helm create hello-world
+```bash
+
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+
+sudo apt-get install apt-transport-https --yes
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+
+sudo apt-get update
+
+sudo apt-get install helm
 
 ```
+
+Helm Example >> Apache
+
+URL >> https://bitnami.com/stack/apache/helm
+
+```bash
+helm install my-release oci://registry-1.docker.io/bitnamicharts/apache
+```
+
+Please be patient while the chart is being deployed
+
+Get the Apache URL by running:
+
+Please ensure an external IP is associated to the my-release-apache service before proceeding
+
+Watch the status using: 
+
+```bash
+
+kubectl get svc --namespace default -w my-release-apache
+
+export SERVICE_IP=$(kubectl get svc --namespace default my-release-apache --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+
+echo URL            : http://$SERVICE_IP/
+
+```
+
+WARNING: You did not provide a custom web application. Apache will be deployed with a default page. Check the README section "Deploying your custom web application" in https://github.com/bitnami/charts/blob/main/bitnami/apache/README.md#deploying-a-custom-web-application.
+
+```bash
+
+kubectl patch svc my-release-apache -n default -p '{"spec": {"type": "LoadBalancer", "externalIPs":["148.251.119.125"]}}'
+
+kubectl get pods
+
+kubectl get nodes
+
+kubectl get services
+
+kubectl delete deployment my-release-apache
+
+kubectl delete service my-release-apache
+
+```
+
 
 
